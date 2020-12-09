@@ -2,12 +2,12 @@
 #  Entry/Exit Management System
 #  version alfa test
 #
-#       __________   __________  ____    _____       __________
-#      /  _______/  /  _______/ /   |   /    |      /  _______/
-#     /  /______   /  /______  /    |  / /|  |     /  /______
-#    /  _______/  /  _______/ /  /| | / / |  |    /_______  /
-#   /  /______   /  /______  /  / | |/ /  |  |   ________/ /
-#  /_________/  /_________/ /__/  |___/   |__|  /_________/
+#       __________   __________  ____    _____      __________
+#      /  _______/  /  _______/ /   |   /    |     /  _____  /
+#     /  /______   /  /______  /    |  / /|  |    /  /____'-'
+#    /  _______/  /  _______/ /  /| | / / |  |   /_______  /
+#   /  /______   /  /______  /  / | |/ /  |  |  ,-,_____/ /
+#  /_________/  /_________/ /__/  |___/   |__| /_________/
 #
 #  1.probrem: interrupt with Ctrl+C　--> resolved!
 #  2.Nomalize Student ID --> I dont understand how to use it
@@ -58,12 +58,14 @@ def on_connect(tag):
     # print(tag.dump()[4])
     if isinstance(tag, nfc.tag.tt3.Type3Tag):
         try:
-            print("-----------------------------------------------")
+            print("/////////////////////////////////////////////////////////")
+
 
             # get date & time 
             date = datetime.datetime.now().strftime("%Y/%m/%d")
             time = datetime.datetime.now().strftime("%H:%M:%S")
             print(time + date)
+
 
             # output contents as hexadecimal 
             hex_raw = tag.dump()[4].split()[-1]
@@ -73,10 +75,12 @@ def on_connect(tag):
             hex_str_id = str(hex_raw)
             #print(hex_str_id) #output:|01GP19C001....01|
             
+
             # means1: slise
             student_id = hex_str_id[3:11]
             print(student_id)          
             
+
             # confirm your entry / exit status
             if student_id in stid_dic:  # when you entry after the second time
                 print("you are in dictionaly")
@@ -104,19 +108,23 @@ def on_connect(tag):
                 print("*new status* ==> " + status_ee)
                 print(stid_dic) # view dictionaly
 
+
             # upload some data to google spreadsheet
             wks = gc.open(sheet_name).sheet1
             wks.append_row([date, time, student_id, status_ee])
 
+
+            print("-  -  -  -  -  -  -  -  -  -  -  -  -  -")
             # alart 
-            if developer == 'GP19C001': # developer option
+            if student_id == developer: # developer option
                 print("you are developer!")
+                subprocess.call("mpg321 testvoice.mp3", shell=True)
                 subprocess.call("mpg321 testAudio.mp3", shell=True)
-                #subprocess.call("mpg321 testAudio.mp3", shell=True)
                 
             else:
                 print("Welcome!")
                 subprocess.call("mpg321 testAudio.mp3", shell=True)
+            
             
             #cell_number = 'A1'
             #input_stid = 'TEST'
@@ -144,6 +152,11 @@ def on_connect(tag):
     return True # カードが離れるまでに1回のみ 
 
 def main():
+    # upload the message to google spreadsheet
+    fst_msg = "The system has been launched!"
+    wks = gc.open(sheet_name).sheet1
+    wks.append_row([fst_msg])
+    
     while True:
         with nfc.ContactlessFrontend("usb") as clf:
             rdwr = {
