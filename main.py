@@ -36,26 +36,35 @@ signal.signal(signal.SIGINT, signal.SIG_DFL)
 # sound module
 import subprocess
 
+
 # API setting
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 key_name = 'entryexit-management-system-28b2b1900aad.json'
 sheet_name = 'entryexit data'
  
+
 # rogin to API
 scope = ['https://spreadsheets.google.com/feeds','https://www.googleapis.com/auth/drive']
 credentials = ServiceAccountCredentials.from_json_keyfile_name(key_name, scope)
 gc = gspread.authorize(credentials)
 
+
 # student id
 developer = "GP19C001"
+
 
 # student ID dictionaly
 stid_dic = {}   #empty
 status_ee = "entry"
 
+
+#----------------------------------------------
+# start of on_connect(tag)
+#----------------------------------------------
 def on_connect(tag):
     # print(tag.dump()[4])
+    
     if isinstance(tag, nfc.tag.tt3.Type3Tag):
         try:
             print("/////////////////////////////////////////////////////////")
@@ -90,84 +99,95 @@ def on_connect(tag):
                 #print((student_id, "entry") in stid_dic.items())  # return True or False
 
                 if "entry" in stid_dic[student_id]: # exit
-                    print("you exited")
+                    print("you have exited")
+                    
                     stid_dic[student_id] = "exit"
                     status_ee = stid_dic[student_id]
                     print("*new status* ==> " + status_ee)
                     
+                    print("Message ==> お疲れ様でした")
+                    
                 elif "exit" in stid_dic[student_id]: # entry
                     print("welcome!")
+                    
                     stid_dic[student_id] = "entry"
                     status_ee = stid_dic[student_id]
                     print("*new status* ==> " + status_ee)
-            
+                    
+                    print("Message ==> ようこそ！")
+                # end of if "entry" in stid_dic[student_id]:
+
             else:   # when you entry first time in a day
                 print("you are not in dictionaly!")
+                
                 stid_dic[student_id] = "entry"
                 status_ee = stid_dic[student_id]
                 print("*new status* ==> " + status_ee)
+                
                 print(stid_dic) # view dictionaly
-
+                
+                print("Message ==> ようこそ！")
+            # end of if student_id in stid_dic:
 
             # upload some data to google spreadsheet
             wks = gc.open(sheet_name).sheet1
             wks.append_row([date, time, student_id, status_ee])
 
 
-            print("-  -  -  -  -  -  -  -  -  -  -  -  -  -")
+            #print("-  -  -  -  -  -  -  -  -  -  -  -  -  -")
             # alart 
-            if student_id == developer: # developer option
-                print("you are developer!")
-                subprocess.call("mpg321 testvoice.mp3", shell=True)
-                subprocess.call("mpg321 testAudio.mp3", shell=True)
+            #if student_id == developer: # developer option
+             #   print("you are developer!")
+              #  subprocess.call("mpg321 testvoice.mp3", shell=True)
+               # subprocess.call("mpg321 testAudio.mp3", shell=True)
                 
-            else:
-                print("Welcome!")
-                subprocess.call("mpg321 testAudio.mp3", shell=True)
-            
-            
-            #cell_number = 'A1'
-            #input_stid = 'TEST'
-            #wks = gc.open(sheet_name).sheet1
-            #wks.update_acell(cell_number, student_id)
-            
-            # means2:Nomalization
-            #content = r'01GP19c001....01'
-            #pattern = 'GP' #GP[11-30][A-D][0-250]
-            #repatter = re.compile(r'GP18A122')
-            #student_id = repatter.match(content)
-            #student_id = repatter.match(hex_str_id)
-            #if student_id != None:
-            #    print(student_id.group())
-
             #else:
-            #    print("not mutch!")
+             #   print("Welcome!")
+              #  subprocess.call("mpg321 testAudio.mp3", shell=True)
+        # end of try:
 
         except Exception as e:
             print( "error: %s" % e)
+        # end of try:/ecept:
 
     else:
         print ("error: tag isn't Type3Tag")
+    # end of if isinstance(tag, nfc.tag.tt3.Type3Tag):
 
     return True # カードが離れるまでに1回のみ 
+# end of on_connect(tag)
 
+#----------------------------------------------
+# start of main()
+#----------------------------------------------
 def main():
-    # upload the message to google spreadsheet
-    fst_msg = "The system has been launched!"
-    wks = gc.open(sheet_name).sheet1
-    wks.append_row([fst_msg])
+    # get date & time
+    date = datetime.datetime.now().strftime("%Y/%m/%d")
+    time = datetime.datetime.now().strftime("%H:%M:%S")
     
+    
+    # upload the message to google spreadsheet
+    fst_msg = "EEMS has been launched!"
+    wks = gc.open(sheet_name).sheet1
+    wks.append_row([date, time, "null", fst_msg])
+    
+    # start og while True
     while True:
         with nfc.ContactlessFrontend("usb") as clf:
             rdwr = {
                 'targets': ['212F', '424F'], # Type3Tag
+                
+                
                 # 'on-startup': on_startup,
                 'on-connect': on_connect
+            
             }
             clf.connect(rdwr=rdwr)
+    # end of while True
+# end of main()
 
 
 if __name__ == "__main__":
     main()
-
+# end of if __name__ == "__main__":
     
