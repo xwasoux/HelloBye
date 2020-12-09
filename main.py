@@ -9,8 +9,6 @@
 #   /  /______   /  /______  /  / | |/ /  |  |  ,-,_____/ /
 #  /_________/  /_________/ /__/  |___/   |__| /_________/
 #
-#  1.probrem: interrupt with Ctrl+C　--> resolved!
-#  2.Nomalize Student ID --> I dont understand how to use it
 ##################################################################
 
 #!/usr/bin/env python
@@ -171,12 +169,12 @@ def main():
     wks = gc.open(sheet_name).sheet1
     wks.append_row([date, time, "null", fst_msg])
     
+
     # start og while True
     while True:
         with nfc.ContactlessFrontend("usb") as clf:
             rdwr = {
                 'targets': ['212F', '424F'], # Type3Tag
-                
                 
                 # 'on-startup': on_startup,
                 'on-connect': on_connect
