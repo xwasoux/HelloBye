@@ -57,6 +57,9 @@ stid_dic = {}   #empty
 status_ee = "entry"
 
 
+# csv file
+import csv
+
 #----------------------------------------------
 # start of on_connect(tag)
 #----------------------------------------------
@@ -123,11 +126,22 @@ def on_connect(tag):
                 print("Message ==> ようこそ！")
             # end of if student_id in stid_dic:
 
+
+            # write the data to csv file
+            print('---  追記開始  ---')
+            with open('log_data.csv', 'a') as csvFile:
+                writer = csv.writer(csvFile)
+                writer.writerow([date, time, student_id, status_ee])
+            
+            csvFile.close()
+            print('---  追記終了  ---')
+
             # upload some data to google spreadsheet
             #wks = gc.open(sheet_name).worksheet('log_data')
+            print('---  アップロード開始  ---')
             wks = gc.open(sheet_name).worksheet('test_wks')
             wks.append_row([date, time, student_id, status_ee])
-
+            print('---  アップロード終了  ---')
 
             #print("-  -  -  -  -  -  -  -  -  -  -  -  -  -")
             # alart 
@@ -160,9 +174,16 @@ def main():
     date = datetime.datetime.now().strftime("%Y/%m/%d")
     time = datetime.datetime.now().strftime("%H:%M:%S")
     
-    
-    # upload the message to google spreadsheet
+
+    # write the message to cvs file
     fst_msg = "EEMS has been launched!"
+    with open('log_data.csv', 'a') as csvFile:
+        writer = csv.writer(csvFile)
+        writer.writerow([date, time, "null", fst_msg])
+            
+    csvFile.close()
+
+
     #wks = gc.open(sheet_name).worksheet('log_data')
     wks = gc.open(sheet_name).worksheet('test_wks')
     wks.append_row([date, time, "null", fst_msg])
