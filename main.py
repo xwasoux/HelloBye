@@ -85,7 +85,7 @@ def on_connect(tag):
 
             # means1: slise
             student_id = hex_str_id[3:11]
-            print(student_id)          
+            print("user: " + student_id)          
             
 
             # confirm your entry / exit status
@@ -97,8 +97,6 @@ def on_connect(tag):
                 #print((student_id, "entry") in stid_dic.items())  # return True or False
 
                 if "entry" in stid_dic[student_id]: # exit
-                    print("you have exited")
-                    
                     stid_dic[student_id] = "exit"
                     status_ee = stid_dic[student_id]
                     print("*new status* ==> " + status_ee)
@@ -106,8 +104,6 @@ def on_connect(tag):
                     print("Message ==> お疲れ様でした")
                     
                 elif "exit" in stid_dic[student_id]: # entry
-                    print("welcome!")
-                    
                     stid_dic[student_id] = "entry"
                     status_ee = stid_dic[student_id]
                     print("*new status* ==> " + status_ee)
@@ -128,7 +124,8 @@ def on_connect(tag):
             # end of if student_id in stid_dic:
 
             # upload some data to google spreadsheet
-            wks = gc.open(sheet_name).sheet1
+            #wks = gc.open(sheet_name).worksheet('log_data')
+            wks = gc.open(sheet_name).worksheet('test_wks')
             wks.append_row([date, time, student_id, status_ee])
 
 
@@ -166,7 +163,8 @@ def main():
     
     # upload the message to google spreadsheet
     fst_msg = "EEMS has been launched!"
-    wks = gc.open(sheet_name).sheet1
+    #wks = gc.open(sheet_name).worksheet('log_data')
+    wks = gc.open(sheet_name).worksheet('test_wks')
     wks.append_row([date, time, "null", fst_msg])
     
 
@@ -181,6 +179,7 @@ def main():
             
             }
             clf.connect(rdwr=rdwr)
+        # end of with nfc.ContactlessFrontend("usb") as clf:
     # end of while True
 # end of main()
 
