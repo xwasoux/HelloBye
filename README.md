@@ -1,2 +1,2 @@
 # EntryExit-Management-System
-This is a hackathon project in OECU faculty of Information and Communication Engineering
+大阪電気通信大学 情報通信工学部のハッカソン企画で開発した入退室管理システムです．
