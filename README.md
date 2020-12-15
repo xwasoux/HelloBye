@@ -6,7 +6,7 @@
 
 ## システム概要
 システムの全体構成図をFig.1に示す．
-[システム構成図](https://github.com/xwasoux/image/blob/master/systemFigure.png)
+![システム構成図](https://github.com/xwasoux/image/blob/master/systemFigure.png)
 
 ### ローカルサイド
 このシステムに必要な機材は以下の3つです．
