@@ -1,43 +1,48 @@
 # EntryExit-Management-System
 本システム（以下 EEMS）は，大阪電気通信大学 情報通信工学部のハッカソン企画で開発した入退室管理システムです．
 
-Pasoriを用いて学生証（Felica）から学籍番号の情報を取得し，Google Spreadsheetにて情報を管理する．
-また，Google Apps Scriptを利用することで，SlackやGmailでの通知も行う．
+After Raspberry Pi4 have gets the Student number with Pasori from student ID card, send to Google Spreadsheet with Google Spreadsheet API.
 
-ユーザは学生証をカードリーダにかざすだけで良い．
+By using the Google Apps Script associated with Google Spreadsheet , notification via Slack and Gmail are also performed.
+
+Users only need to hold their student ID card over the card reader.
  
 # DEMO
  
 "hoge"の魅力が直感的に伝えわるデモ動画や図解を載せる
  
 # Features
-![システム構成図](https://github.com/xwasoux/image/blob/master/systemFigure.png)
-"hoge"のセールスポイントや差別化などを説明する
+![system constitution figure](https://github.com/xwasoux/image/blob/master/EEMS/systemConstitutionFigure.png)
+
  
 # Requirement
 
-必要な機器は以下の通りである．
+The necessary equipment is as follows.
 + Raspberry pi 4 (Raspberry Pi OS)
 + Pasori
-+ USB スピーカー
++ USB Speaker
 
 
-必要なライブラリは以下の通りである．
+The necessary library is as follows.
 * Python 3.7 
 * nfcpy
-* hogehuga 1.0.2
+
  
 # Installation
  
-Pasoriを利用するためにnfcpyをインストールする
+Install nfcpy to use Pasori.
  
 ```bash
 pip install -U nfcpy
 ```
+
+# Google Apps Script
+Access to Google Drive and create a new Spreadsheet, and select Tools > Script Editor in the menu bar.
+
+# Webhooks
+You need to set to use nofication via Slack.
  
 # Usage
- 
-DEMOの実行方法など、"hoge"の基本的な使い方を説明する
  
 ```bash
 git clone https://github.com/xwasoux/EntryExit-Management-System.git
