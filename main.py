@@ -105,6 +105,7 @@ def on_connect(tag):
                     print("*new status* ==> " + status_ee)
                     
                     print("Message ==> お疲れ様でした")
+                    subprocess.call("mpg321 voice/otukaresama.mp3", shell=True)
                     
                 elif "exit" in stid_dic[student_id]: # entry
                     stid_dic[student_id] = "entry"
@@ -112,6 +113,7 @@ def on_connect(tag):
                     print("*new status* ==> " + status_ee)
                     
                     print("Message ==> ようこそ！")
+                    subprocess.call("mpg321 voice/gambattekudasai.mp3", shell=True)
                 # end of if "entry" in stid_dic[student_id]:
 
             else:   # when you entry first time in a day
@@ -124,6 +126,7 @@ def on_connect(tag):
                 print(stid_dic) # view dictionaly
                 
                 print("Message ==> ようこそ！")
+                subprocess.call("mpg321 voice/gambattekudasai.mp3", shell=True)
             # end of if student_id in stid_dic:
 
 
@@ -137,22 +140,21 @@ def on_connect(tag):
             print('---  追記終了  ---')
 
             # upload some data to google spreadsheet
-            #wks = gc.open(sheet_name).worksheet('log_data')
             print('---  アップロード開始  ---')
-            wks = gc.open(sheet_name).worksheet('test_wks')
+            wks = gc.open(sheet_name).worksheet('log_data') # send to "log_data"
+            #wks = gc.open(sheet_name).worksheet('test_wks') # send to "test_wks"
             wks.append_row([date, time, student_id, status_ee])
             print('---  アップロード終了  ---')
 
-            #print("-  -  -  -  -  -  -  -  -  -  -  -  -  -")
+            print("-  -  -  -  -  -  -  -  -  -  -  -  -  -")
+            
             # alart 
-            #if student_id == developer: # developer option
-             #   print("you are developer!")
-              #  subprocess.call("mpg321 testvoice.mp3", shell=True)
-               # subprocess.call("mpg321 testAudio.mp3", shell=True)
-                
-            #else:
-             #   print("Welcome!")
-              #  subprocess.call("mpg321 testAudio.mp3", shell=True)
+            if student_id == developer: # developer option
+                print("you are developer!")
+                subprocess.call("mpg321 voice/kenkyuu.mp3", shell=True)
+                subprocess.call("mpg321 voice/matane.mp3", shell=True)
+                subprocess.call("mpg321 voice/gambattekudasai.mp3", shell=True)
+
         # end of try:
 
         except Exception as e:
