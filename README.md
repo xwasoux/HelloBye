@@ -1,5 +1,14 @@
-# EntryExit-Management-System
-本システム（以下 EEMS）は，大阪電気通信大学 情報通信工学部のハッカソン企画で開発した入退室管理システムです．
+# HelloBye
+----
+### 更新履歴
+Date|Discription
+--|--
+2021.04.01|システムの名前を「EntryExit-Management-System」から「HelloBye」に変更しました
+2020.12.17|開発版を公開
+
+----
+
+HelloBye（以下 システム）は，大阪電気通信大学 情報通信工学部のハッカソン企画で開発した入退室管理システムです．
 
 After Raspberry Pi4 have gets the Student number with Pasori from student ID card, send to Google Spreadsheet with Google Spreadsheet API.
 
