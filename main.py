@@ -37,7 +37,7 @@ import subprocess
 # API setting
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
-key_name = 'entryexit-management-system-28b2b1900aad.json'
+key_name = '***********************************.json'
 sheet_name = 'entryexit data'
  
 
@@ -58,6 +58,18 @@ status_ee = "entry"
 
 # csv file
 import csv
+
+
+#---------------------------------------------
+# print it if system run
+#----------------------------------------------
+def systemRunPrint():
+    print("     __  __     ____      ____            ")
+    print("    / / / /__  / / /___  / __ )__  _____  ")
+    print("   / /_/ / _ \/ / / __ \/ __  / / / / _ \ ")
+    print("  / __  /  __/ / / /_/ / /_/ / /_/ /  __/ ")
+    print(" /_/ /_/\___/_/_/\____/_____/\__, /\___/  ")
+    print("                            /____/       ")
 
 #----------------------------------------------
 # start of on_connect(tag)
@@ -189,6 +201,7 @@ def main():
     wks = gc.open(sheet_name).worksheet('test_wks')
     wks.append_row([date, time, "null", fst_msg])
     
+    systemRunPrint()
 
     # start og while True
     while True:
