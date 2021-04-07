@@ -10,11 +10,7 @@ Date|Discription
 
 HelloBye（以下 システム）は，大阪電気通信大学 情報通信工学部のハッカソン企画で開発した入退室管理システムです．
 
-After Raspberry Pi4 have gets the Student number with Pasori from student ID card, send to Google Spreadsheet with Google Spreadsheet API.
-
-By using the Google Apps Script associated with Google Spreadsheet , notification via Slack and Gmail are also performed.
-
-Users only need to hold their student ID card over the card reader.
+このシステムの利用にはRaspberry PiとPasori, そしてGoogle Accountが必要です．Raspberry Pi と Pasori はカードの読み取り制御とデータ転送に，Google Account はGoogle Cloud Platformを用いてデータベースと外部連携による通知の機能を実装するのに必要です．
  
 # DEMO
  
