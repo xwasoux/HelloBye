@@ -22,15 +22,20 @@ HelloBye（以下 システム）は，大阪電気通信大学 情報通信工�
  
 # Requirement
 
-The necessary equipment is as follows.
+このシステムの構築に必要な機材は以下の通りです．
 + Raspberry pi 4 (Raspberry Pi OS)
 + Pasori
 + USB Speaker
 
 
-The necessary library is as follows.
+また，ソフトウェアの開発に必要なライブラリは以下の通りです．
+
 * Python 3.7 
+  * pyUSB
+  * libusb
+  * gspread
 * nfcpy
+* Docker
 
  
 # Installation
@@ -39,6 +44,9 @@ Install nfcpy to use Pasori.
  
 ```bash
 pip install -U nfcpy
+pip instsall libusb
+pip install gspread
+pip install pyusb
 ```
 
 # Google Apps Script
